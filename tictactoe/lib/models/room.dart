@@ -3,7 +3,5 @@ class Room {
 
   Room(this.roomId);
 
-  factory Room.fromJson(String room) {
-    return Room(room);
-  }
+  factory Room.fromJson(String room) => Room(room);
 }
