@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:tictactoe/constants/api_constant.dart';
+import 'package:tictactoe/constants/game_constant.dart';
 import 'package:tictactoe/screens/room_detail.dart';
+import 'package:tictactoe/services/room_service.dart';
 
 import '../models/room.dart';
 
@@ -20,18 +18,7 @@ class _ListRoomScreenState extends State<ListRoomScreen> {
   @override
   void initState() {
     super.initState();
-    _roomsFuture = fetchRooms();
-  }
-
-  Future<List<Room>> fetchRooms() async {
-    final response = await http.get(Uri.parse(ApiConstant.getRoomsEndpoint));
-
-    if (response.statusCode == 200) {
-      List<dynamic> jsonResponse = json.decode(response.body)['rooms'];
-      return jsonResponse.map((room) => Room.fromJson(room)).toList();
-    } else {
-      throw Exception('Failed to load rooms');
-    }
+    _roomsFuture = RoomService.fetchRooms();
   }
 
   @override
@@ -68,7 +55,7 @@ class _ListRoomScreenState extends State<ListRoomScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => RoomDetailScreen(room: room.roomId),
+                              builder: (context) => RoomDetailScreen(room: room.roomId, player: GameConstant.playerO),
                             ),
                           );
                         },
@@ -86,7 +73,17 @@ class _ListRoomScreenState extends State<ListRoomScreen> {
           children: [
             FloatingActionButton(
               heroTag: 'add_new_room',
-              onPressed: () {},
+              onPressed: () async {
+                Room room = await RoomService.createRoom();
+                if (context.mounted) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RoomDetailScreen(room: room.roomId, player: GameConstant.playerX),
+                    ),
+                  );
+                }
+              },
               child: const Icon(Icons.add),
             ),
             const SizedBox(height: 16),
@@ -94,7 +91,7 @@ class _ListRoomScreenState extends State<ListRoomScreen> {
               heroTag: 'refresh_data',
               onPressed: () {
                 setState(() {
-                  _roomsFuture = fetchRooms();
+                  _roomsFuture = RoomService.fetchRooms();
                 });
               },
               child: const Icon(Icons.refresh),
