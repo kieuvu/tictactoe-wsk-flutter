@@ -15,15 +15,9 @@ class GameConstant
         'status' => GameConstant::CONTINUE,
         'turn'   => GameConstant::PLAYER_X,
         'board'  => [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+            null, null, null,
+            null, null, null,
+            null, null, null
         ]
     ];
 }

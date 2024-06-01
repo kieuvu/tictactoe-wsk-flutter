@@ -19,4 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/game/rooms', [GameController::class, 'getFreeRooms']);
+Route::get('/game/rooms', [GameController::class, 'getRooms']);
+Route::post('/game/create', [GameController::class, 'createRoom']);
+Route::get('/game/{roomId}/join', [GameController::class, 'joinRoom']);
+Route::post('/game/{roomId}/update', [GameController::class, 'updateBoard']);

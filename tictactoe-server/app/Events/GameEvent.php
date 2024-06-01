@@ -14,7 +14,7 @@ class GameEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(public int $status, public int $turn, public string $roomId)
+    public function __construct(public string $roomId, public array $roomData)
     {
     }
 
