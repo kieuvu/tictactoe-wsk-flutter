@@ -77,7 +77,9 @@ class _ListRoomScreenState extends State<ListRoomScreen> {
           const SizedBox(height: 16),
           FloatingActionButton(
             heroTag: 'refresh_data',
-            onPressed: () => setState(() => _roomsFuture = RoomService.fetchRooms()),
+            onPressed: () => setState(() {
+              _roomsFuture = RoomService.fetchRooms();
+            }),
             child: const Icon(Icons.refresh),
           )
         ],

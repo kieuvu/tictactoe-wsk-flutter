@@ -56,9 +56,9 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
     setState(() => _game = Game(status: data["status"], turn: data["turn"], board: data["board"]));
 
     if (status == GameConstant.cont) return;
-    if (status == GameConstant.oWin) return showResultDialog("O won !!!");
-    if (status == GameConstant.xWin) return showResultDialog("X won !!!");
     if (status == GameConstant.draw) return showResultDialog("Draw !!!");
+
+    return showResultDialog(widget.player == status ? "You won !!!" : "You lose !!!");
   }
 
   Future<void> _handleTap(int index) async {
