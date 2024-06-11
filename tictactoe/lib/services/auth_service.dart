@@ -24,4 +24,12 @@ class AuthService {
     }
     return null;
   }
+
+  static Future<void> logout() async {
+    try {
+      return await _auth.signOut();
+    } catch (exception) {
+      log(exception.toString());
+    }
+  }
 }

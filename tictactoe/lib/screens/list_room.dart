@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tictactoe/constants/game_constant.dart';
+import 'package:tictactoe/screens/login.dart';
 import 'package:tictactoe/screens/room_detail.dart';
+import 'package:tictactoe/services/auth_service.dart';
 import 'package:tictactoe/services/room_service.dart';
 
 import '../models/room.dart';
@@ -21,10 +23,28 @@ class _ListRoomScreenState extends State<ListRoomScreen> {
     _roomsFuture = RoomService.fetchRooms();
   }
 
+  Future<void> _signOut(BuildContext context) async {
+    await AuthService.logout();
+    if (context.mounted) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: const Text('Rooms'),
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => _signOut(context),
+          ),
+        ],
       ),
       body: FutureBuilder<List<Room>>(
           future: _roomsFuture,

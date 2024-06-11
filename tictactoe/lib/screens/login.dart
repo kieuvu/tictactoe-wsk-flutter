@@ -38,14 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return;
   }
 
-  Future<void> _signIn() async {
-    return;
-  }
-
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: const Text('Tictactoe'),
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -117,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () => _handle(context),
+                        style: ElevatedButton.styleFrom(padding: const EdgeInsets.all(20)),
                         child: Text(_isSignUp ? 'Sign Up' : 'Sign In'),
                       ),
                     ),
