@@ -24,11 +24,12 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 sudo mv composer.phar /usr/local/bin/composer
 
-# Install Server Dependencies
+# Install Server Dependencies & Run
 cd tictactoe-server
 composer install
+php artisan serve
 
-# Install Server Dependencies
+# Install Client Dependencies
 cd ..
 cd tictactoe
 flutter pub get
