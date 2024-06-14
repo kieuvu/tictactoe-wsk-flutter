@@ -75,6 +75,10 @@ class GameController extends Controller
 
         event(new GameEvent($roomId, $roomData));
 
+        if ($roomData["status"] != GameConstant::CONTINUE) {
+            GameHelper::clearGame($roomId);
+        }
+
         return response()->json([
             "status" => true,
             "data" => $roomData

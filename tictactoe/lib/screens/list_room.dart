@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tictactoe/constants/game_constant.dart';
+import 'package:tictactoe/screens/history.dart';
 import 'package:tictactoe/screens/login.dart';
 import 'package:tictactoe/screens/room_detail.dart';
 import 'package:tictactoe/services/auth_service.dart';
@@ -40,6 +41,10 @@ class _ListRoomScreenState extends State<ListRoomScreen> {
         title: const Text('Rooms'),
         automaticallyImplyLeading: false,
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.history),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HistoryScreen())),
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () => _signOut(context),

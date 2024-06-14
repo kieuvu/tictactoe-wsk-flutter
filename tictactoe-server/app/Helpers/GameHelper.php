@@ -65,4 +65,8 @@ class GameHelper
     {
         Cache::put(GameHelper::getRoomKey($roomId), $data);
     }
+
+    public static function clearGame(string $roomId): void {
+        Cache::forget(GameHelper::getRoomKey($roomId));
+    }
 }

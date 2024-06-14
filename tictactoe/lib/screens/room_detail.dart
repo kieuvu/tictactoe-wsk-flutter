@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'package:tictactoe/constants/game_constant.dart';
 import 'package:tictactoe/models/game.dart';
+import 'package:tictactoe/models/history.dart';
+import 'package:tictactoe/screens/list_room.dart';
+import 'package:tictactoe/services/history_service.dart';
 import 'package:tictactoe/services/room_service.dart';
 
 class RoomDetailScreen extends StatefulWidget {
@@ -47,7 +51,7 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
     setState(() => _game = game);
   }
 
-  dynamic onEvent(PusherEvent event) {
+  dynamic onEvent(PusherEvent event) async {
     if (event.eventName != "game.notification") return;
 
     dynamic data = event.data["roomData"];
@@ -58,7 +62,16 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
     if (status == GameConstant.cont) return;
     if (status == GameConstant.draw) return showResultDialog("Draw !!!");
 
-    return showResultDialog(widget.player == status ? "You won !!!" : "You lose !!!");
+    String result = widget.player == status ? "You won !!!" : "You lose !!!";
+
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm:ss').format(now);
+
+    History history = History(result: result, timestamp: formattedDate);
+
+    await HistoryService.createHistory(history);
+
+    return showResultDialog(result);
   }
 
   Future<void> _handleTap(int index) async {
@@ -90,6 +103,14 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(widget.room),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ListRoomScreen(),
+                )),
+          ),
         ),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,

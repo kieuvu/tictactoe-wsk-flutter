@@ -10,11 +10,14 @@ Future main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyDtEd5KIkfm5emK8XYduGfy6BKC0lgKlPs",
-        appId: "1:475209359619:web:44fe29fb8065e86eff8936",
-        messagingSenderId: "475209359619",
-        projectId: "flutter-tictactoe-27297",
-      ),
+          apiKey: "AIzaSyDtEd5KIkfm5emK8XYduGfy6BKC0lgKlPs",
+          authDomain: "flutter-tictactoe-27297.firebaseapp.com",
+          databaseURL: "https://flutter-tictactoe-27297-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "flutter-tictactoe-27297",
+          storageBucket: "flutter-tictactoe-27297.appspot.com",
+          messagingSenderId: "475209359619",
+          appId: "1:475209359619:web:44fe29fb8065e86eff8936",
+          measurementId: "G-03MNFNXD5X"),
     );
   } else {
     await Firebase.initializeApp();
